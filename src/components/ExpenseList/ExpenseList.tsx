@@ -5,14 +5,11 @@ import { ExpenseListProps } from "@/utils/interfaces";
 import React from "react";
 import { BsPencilSquare, BsTrash } from "react-icons/bs";
 
-
-
 const ExpenseList: React.FC<ExpenseListProps> = ({
   onEditExpense,
   onDeleteExpense,
 }) => {
   const { filteredExpenses } = useExpenses();
-
   return (
     <div className="expense-list-container">
       <table className="table table-striped">
@@ -28,7 +25,9 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
         <tbody>
           {filteredExpenses.map((expense) => (
             <tr key={expense._id}>
-              <td>{new Date(expense.date).toLocaleDateString()}</td>
+             <td>{new Date(expense.date).toLocaleDateString('es-CO', { timeZone: 'UTC' })}</td>
+
+
               <td>{expense.category}</td>
               <td>${expense.amount.toFixed(2)}</td>
               <td>{expense.description}</td>

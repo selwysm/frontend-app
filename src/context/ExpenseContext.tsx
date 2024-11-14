@@ -54,7 +54,8 @@ export const ExpenseProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     fetchExpenses();
-  }, [fetchExpenses]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const calculateSummary = (expenses: Expense[]) => {
     const total = expenses.reduce((acc, expense) => acc + expense.amount, 0);

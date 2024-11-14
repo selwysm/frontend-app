@@ -21,19 +21,21 @@ const HomePage: React.FC = () => {
     isLoading,
   } = useExpenseModal(fetchExpenses);
 
-  const { deleteExpense, errorMessage: deleteError } = useDeleteExpense(fetchExpenses);
+  const { deleteExpense, errorMessage: deleteError } =
+    useDeleteExpense(fetchExpenses);
 
   useEffect(() => {
     fetchExpenses();
-  }, [fetchExpenses]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="container">
       <ExpenseSummary onAddExpense={openAddModal} />
       <ExpenseFilters />
-      <ExpenseList 
-        onEditExpense={openEditModal} 
-        onDeleteExpense={deleteExpense} 
+      <ExpenseList
+        onEditExpense={openEditModal}
+        onDeleteExpense={deleteExpense}
       />
       <ExpenseModal
         show={showModal}
@@ -43,7 +45,9 @@ const HomePage: React.FC = () => {
         errorMessage={errorMessage}
         isLoading={isLoading}
       />
-      {deleteError && <div className="alert alert-danger mt-3">{deleteError}</div>}
+      {deleteError && (
+        <div className="alert alert-danger mt-3">{deleteError}</div>
+      )}
     </div>
   );
 };
