@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import { useExpenses } from "@/context/ExpenseContext";
 
@@ -9,20 +8,18 @@ const ExpenseFilters: React.FC = () => {
   const [endDate, setEndDate] = useState("");
 
   const handleFilter = () => {
-    const filters = {
+    applyFilters({
       categories: category ? [category] : undefined,
       startDate: startDate || undefined,
       endDate: endDate || undefined,
-    };
-
-    applyFilters(filters);
+    });
   };
 
   const handleClearFilters = () => {
+    clearFilters();
     setCategory("");
     setStartDate("");
     setEndDate("");
-    clearFilters();
   };
 
   return (
