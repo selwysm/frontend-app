@@ -1,0 +1,72 @@
+.expense-summary-container {
+    position: relative;
+    padding: 1rem;
+  }
+  
+  .summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .card-title {
+    margin-left: 1rem;
+  }
+  
+  .summary-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-left: 1rem;
+  }
+  
+  .summary-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 1rem;
+
+  }
+  
+  .category-expenses {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-left: 1rem;
+  }
+  
+  .category-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    gap: 0.25rem;
+  }
+  
+  .btn-position {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .summary-content {
+      flex-direction: column;
+      padding-left: 0;
+    }
+  
+    .category-expenses {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start; 
+    }
+  
+    .btn-position {
+      position: static;
+      margin-top: 1rem;
+      align-self: center;
+      width: calc(100% - 2rem);
+      max-width: 250px;
+    }
+  }
+  

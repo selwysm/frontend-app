@@ -1,24 +1,39 @@
 "use client";
-import React, { useState } from 'react';
-import { useExpenses } from '@/context/ExpenseContext';
+import React, { useState } from "react";
+import { useExpenses } from "@/context/ExpenseContext";
 
 const ExpenseFilters: React.FC = () => {
-  const { filterByCategory, filterByDateRange, clearFilters } = useExpenses();
-  const [category, setCategory] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const { applyFilters, clearFilters } = useExpenses();
+  const [category, setCategory] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const handleFilter = () => {
-    if (category) filterByCategory(category);
-    if (startDate && endDate) filterByDateRange(startDate, endDate);
+    const filters = {
+      categories: category ? [category] : undefined,
+      startDate: startDate || undefined,
+      endDate: endDate || undefined,
+    };
+
+    applyFilters(filters);
+  };
+
+  const handleClearFilters = () => {
+    setCategory("");
+    setStartDate("");
+    setEndDate("");
+    clearFilters();
   };
 
   return (
     <div className="mb-4">
-      <h5>Filtros</h5>
       <div className="row">
         <div className="col-md-4">
+          <label htmlFor="category" className="form-label">
+            Categoría
+          </label>
           <select
+            id="category"
             className="form-select"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -31,7 +46,11 @@ const ExpenseFilters: React.FC = () => {
           </select>
         </div>
         <div className="col-md-4">
+          <label htmlFor="startDate" className="form-label">
+            Fecha de Inicio
+          </label>
           <input
+            id="startDate"
             type="date"
             className="form-control"
             value={startDate}
@@ -39,7 +58,11 @@ const ExpenseFilters: React.FC = () => {
           />
         </div>
         <div className="col-md-4">
+          <label htmlFor="endDate" className="form-label">
+            Fecha Final
+          </label>
           <input
+            id="endDate"
             type="date"
             className="form-control"
             value={endDate}
@@ -50,7 +73,7 @@ const ExpenseFilters: React.FC = () => {
       <button className="btn btn-primary mt-3 me-2" onClick={handleFilter}>
         Aplicar Filtros
       </button>
-      <button className="btn btn-secondary mt-3" onClick={clearFilters}>
+      <button className="btn btn-secondary mt-3" onClick={handleClearFilters}>
         Limpiar Filtros
       </button>
     </div>
