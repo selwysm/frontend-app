@@ -21,11 +21,11 @@ const HomePage: React.FC = () => {
     isLoading,
   } = useExpenseModal(fetchExpenses);
 
-  const { deleteExpense, errorMessage: deleteError, isDeleting } = useDeleteExpense(fetchExpenses);
+  const { deleteExpense, errorMessage: deleteError } = useDeleteExpense(fetchExpenses);
 
   useEffect(() => {
     fetchExpenses();
-  }, []);
+  }, [fetchExpenses]);
 
   return (
     <div className="container">

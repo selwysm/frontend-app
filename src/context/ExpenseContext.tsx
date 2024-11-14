@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import api from "../services/api";
 import { Expense, ExpenseContextType } from "@/utils/interfaces";
 
@@ -11,25 +11,22 @@ export const ExpenseProvider: React.FC<{ children: React.ReactNode }> = ({
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [filteredExpenses, setFilteredExpenses] = useState<Expense[]>([]);
   const [totalExpense, setTotalExpense] = useState(0);
-  const [categoryTotals, setCategoryTotals] = useState<{
-    [key: string]: number;
-  }>({});
+  const [categoryTotals, setCategoryTotals] = useState<{ [key: string]: number }>({});
 
-  useEffect(() => {
-    fetchExpenses();
-  }, []);
-
-  const fetchExpenses = async () => {
+  const fetchExpenses = useCallback(async () => {
     try {
       const response = await api.post("/expenses");
-      console.log("response", response);
       setExpenses(response.data);
       setFilteredExpenses(response.data);
       calculateSummary(response.data);
     } catch (error) {
       console.error("Error al obtener los gastos:", error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchExpenses();
+  }, [fetchExpenses]);
 
   const fetchExpensesWithFilters = async (filters: {
     categories?: string[];
@@ -37,7 +34,6 @@ export const ExpenseProvider: React.FC<{ children: React.ReactNode }> = ({
     endDate?: string;
   }) => {
     try {
-      console.log("filters", filters);
       const response = await api.post("/expenses", filters);
       setFilteredExpenses(response.data);
       calculateSummary(response.data);
@@ -52,18 +48,13 @@ export const ExpenseProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const totalsByCategory: { [key: string]: number } = {};
     expenses.forEach((expense) => {
-      if (!totalsByCategory[expense.category])
-        totalsByCategory[expense.category] = 0;
+      if (!totalsByCategory[expense.category]) totalsByCategory[expense.category] = 0;
       totalsByCategory[expense.category] += expense.amount;
     });
     setCategoryTotals(totalsByCategory);
   };
 
-  const applyFilters = (filters: {
-    categories?: string[];
-    startDate?: string;
-    endDate?: string;
-  }) => {
+  const applyFilters = (filters: { categories?: string[]; startDate?: string; endDate?: string }) => {
     fetchExpensesWithFilters(filters);
   };
 

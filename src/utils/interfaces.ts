@@ -55,6 +55,6 @@ export interface ExpenseModalProps {
 }
 
 export interface ExpenseListProps {
-    onEditExpense: (expense: any) => void;
+    onEditExpense: (expense: Expense) => void;
     onDeleteExpense: (id: string) => void;
   }
