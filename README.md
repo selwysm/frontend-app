@@ -13,7 +13,7 @@ Este es el frontend para la aplicación de gestión de gastos. Desarrollado en R
 
 ## Requisitos Previos
 
-- Node.js: Requiere Node.js v18 o superior.
+- Node.js: Requiere Node.js v20 o superior.
 - npm o yarn: Gestor de paquetes.
 - Un archivo `.env.local` configurado con tus variables de entorno
 
